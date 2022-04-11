@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+    <h2>boardpaging.html</h2>
+    <form action="/board/save" method="get">
+        <input type="submit" value="글쓰기">
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>게시글 번호</th>
+            <th>게시글 제목</th>
+            <th>게시글 작성자</th>
+            <th>게시글 내용</th>
+            <th>게시글 조회수</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board: ${boardList}">
+            <td th:text="${board.id}"></td>
+            <td><a th:href="@{|/board/${board.id}|}" th:text="${board.boardTitle}"></a></td>
+            <td th:text="${board.boardWriter}"></td>
+            <td th:text="${board.boardContents}"></td>
+            <td th:text="${board.boardHits}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+
+
+    <div>
+        <tr>
+            <th class="page-item">
+                <a class="page-link" th:href="@{/board/(page=1)}">
+                    <span>First</span>
+                </a>
+            </th>
+
+            <th th:class="${boardList.first} ? 'disabled'" class="page-item">
+
+                <a class="page-link" th:href="${boardList.first} ? '#' : @{/board/(page=${boardList.number})}">
+                    <span>&lt;</span>
+                </a>
+            </th>
+
+            <th th:each="page: ${#numbers.sequence(startPage, endPage)}"
+                th:class="${page == boardList.number + 1} ? 'active'" class="page-item">
+                <a class="page-link" th:text="${page}" th:href="@{/board/(page=${page})}"></a>
+            </th>
+
+            <th th:class="${boardList.last} ? 'disabled'">
+                <a class="page-link" th:href="${boardList.last} ? '#' : @{/board/(page=${boardList.number + 2})}">
+                    <span>&gt;</span>
+                </a>
+            </th>
+
+            <th class="page-item">
+                <a class="page-link" th:href="@{/board/(page=${boardList.totalPages})}">
+                    <span>Last</span>
+                </a>
+            </th>
+        </tr>
+    </div>
+
+
+</body>
+<script>
+
+</script>
+</html>

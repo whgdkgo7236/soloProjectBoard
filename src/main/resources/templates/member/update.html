@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/member/update" method="post" name="updateForm">
+    <input type="hidden" name="id" th:value="${memberDTO.id}" readonly><br>
+    이메일 : <input type="text" name="memberEmail" th:value="${memberDTO.memberEmail}" readonly><br>
+    비밀번호 : <input type="text" id="memberPassword" name="memberPassword"><br>
+    이름 : <input type="text" name="memberName" th:value="${memberDTO.memberName}" ><br>
+    핸드폰번호 : <input type="text" name="memberPhonenum" th:value="${memberDTO.memberPhonenum}" ><br>
+    <!--이미지 :<img th:src="${memberDTO.getFilePath()}" alt=""><br> -->
+    <input type="file" th:src="${memberDTO.getFilePath()}"><br>
+    <input type="hidden" name="origFilename" th:value="${memberDTO.origFilename}">
+    <input type="hidden" name="memberFilename" th:value="${memberDTO.memberFilename}">
+    <input type="button" onclick="updatebtn()" value="수정하기">
+
+
+
+</form>
+<img th:src="@{|/imgs/${memberDTO.memberFilename}|}" alt=""  width="300px"  height="300px">
+<img th:src="@{|/imgs/1643204810701_dog.png|}" alt=""  width="300px"  height="300px">
+
+</body>
+<script>
+    function updatebtn(){
+        const passwordcheck = "[[${memberDTO.memberPassword}]]";
+        const password = document.getElementById("memberPassword").value;
+        if(password == passwordcheck){
+            updateForm.submit();
+        }else{
+            alert("비밀번호가 틀립니다");
+        }
+
+
+    }
+</script>
+</html>

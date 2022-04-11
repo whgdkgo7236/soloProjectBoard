@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+    <h2>paging.html</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>회원 번호</th>
+            <th>이메일</th>
+            <th>이름</th>
+            <th>핸드폰번호</th>
+            <th>삭제</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="member: ${memberList}">
+            <td th:text="${member.id}"></td>
+            <td th:text="${member.memberEmail}"></td>
+            <td th:text="${member.memberName}"></td>
+            <td th:text="${member.memberPhonenum}"></td>
+            <td><button th:onclick="deletebtn([[${member.id}]])">삭제</button></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <tr>
+            <th class="page-item">
+                <a class="page-link" th:href="@{/member/(page=1)}">
+                    <span>First</span>
+                </a>
+            </th>
+
+            <th th:class="${memberList.first} ? 'disabled'" class="page-item">
+               9
+                <a class="page-link" th:href="${memberList.first} ? '#' : @{/member/(page=${memberList.number})}">
+                    <span>&lt;</span>
+                </a>
+            </th>
+
+            <th th:each="page: ${#numbers.sequence(startPage, endPage)}"
+                th:class="${page == memberList.number + 1} ? 'active'" class="page-item">
+                <a class="page-link" th:text="${page}" th:href="@{/member/(page=${page})}"></a>
+            </th>
+
+            <th th:class="${memberList.last} ? 'disabled'">
+                <a class="page-link" th:href="${memberList.last} ? '#' : @{/member/(page=${memberList.number + 2})}">
+                    <span>&gt;</span>
+                </a>
+            </th>
+
+            <th class="page-item">
+                <a class="page-link" th:href="@{/member/(page=${memberList.totalPages})}">
+                    <span>Last</span>
+                </a>
+            </th>
+        </tr>
+    </div>
+
+</body>
+<script>
+    function deletebtn(id){
+
+        const reqUrl = "/member/"+id;
+        console.log(reqUrl);
+        $.ajax({
+           type: 'delete',
+           url: reqUrl ,
+
+            success: function (){
+                console.log("성공");
+                location.href="/member/";
+            },
+            error: function (){
+               alert("ajax실패");
+            }
+        });
+    }
+
+</script>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>update.html</h2>
+    <form action="/board/update" method="post" name="updateForm">
+        번호 : <input type="text" name="boardId" th:value="${boardList.id}" readonly><br>
+        제목 : <input type="text" name="boardTitle" th:value="${boardList.boardTitle}"><br>
+        작성자 : <input type="text" name="boardWriter" th:value="${boardList.boardWriter}" readonly><br>
+        내용 : <input type="text" name="boardContents" th:value="${boardList.boardContents}" ><br>
+        조회수 : <input type="text" name="boardHits" th:value="${boardList.boardHits}" readonly><br>
+        이미지 :<img th:src="@{|/imgs/${boardList.boardFilename}|}" alt=""><br> -->
+        <input type="file" name="boardFile"><br>
+        <input type="hidden" name="origFilename" th:value="${boardList.getOrigFilename()}">
+        <input type="hidden" name="memberFilename" th:value="${boardList.getBoardFilename()}">
+        <input type="submit" value="수정하기">
+
+    </form>
+</body>
+</html>

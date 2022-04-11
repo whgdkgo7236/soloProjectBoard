@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h2>main</h2>
+  <a th:href="@{/board/}">게시글 목록</a><br>
+  <a th:href="@{|/member/update/${member.id}|}">개인정보 수정</a><br>
+  <a th:href="@{/member/}" id="memberPaging">회원 목록</a><br>
+</body>
+<script>
+    const memberEmail = "[[${member.memberEmail}]]";
+    const admincheck = document.getElementById("memberPaging");
+    if(memberEmail=="admin"){
+       admincheck.style.visibility="visible";
+    }else{
+        admincheck.style.visibility="hidden";
+    }
+    console.log("[[${member.memberEmail}]]");
+
+
+</script>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+    <h2>save.html</h2>
+    <form action="/member/save" method="post" name="saveForm" enctype="multipart/form-data">
+        <input type="text" id="memberEmail" name="memberEmail" onblur="emailcheck()" placeholder="이메일"><br>
+        <span id="checking"></span><br>
+        <input type="text" name="memberPassword" placeholder="비밀번호"><br>
+        <input type="text" name="memberName" placeholder="이름"><br>
+        <input type="text" name="memberPhonenum" placeholder="핸드폰번호"><br>
+        <input type="file" name="memberFile" value="파일첨부"><br>
+        <input type="Button" onclick="savemember()" value="회원가입">
+    </form>
+
+</body>
+<script>
+    function emailcheck(){
+        const email = document.getElementById("memberEmail").value;
+        const checktext = document.getElementById("checking");
+        $.ajax({
+            type : "post",
+            url : "/member/emailDuplicate",
+            data : {"memberEmail":email},
+            dataType : "text",
+            success : function (result){
+                if(result == "null"){
+                    checktext.style.color = "green";
+                    checktext.innerHTML = "사용가능합니다.";
+                }else{
+                    checktext.style.color = "red";
+                    checktext.innerHTML = "중복되는 아이디입니다.";
+                }
+
+
+            },
+            error: function(){
+                alert("ajax 실패");
+
+            }
+        });
+    }
+    function savemember(){
+
+        saveForm.submit();
+
+    }
+</script>
+</html>
